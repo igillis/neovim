@@ -1,48 +1,50 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- Color schemes
-	{ "rose-pine/neovim", name = "rose-pine" },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "rose-pine/neovim",                name = "rose-pine" },
+	{ "catppuccin/nvim",                 name = "catppuccin" },
+	{ "wadackel/vim-dogrun",             name = "dogrun" },
 
 	-- Colors and formatting
-	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
 	-- File navigations
 	{
-		'nvim-telescope/telescope.nvim', branch = '0.1.x',
+		'nvim-telescope/telescope.nvim',
+		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
 
 	{ "ThePrimeagen/harpoon" },
 
 	-- Code history
-	{ "mbbill/undotree"},
+	{ "mbbill/undotree" },
 
 	-- Git integration
-	{"tpope/vim-fugitive"},
+	{ "tpope/vim-fugitive" },
 
 	-- Manage lsps/daps/formatters
-	{'williamboman/mason.nvim'},
-	{'williamboman/mason-lspconfig.nvim'},
+	{ 'williamboman/mason.nvim' },
+	{ 'williamboman/mason-lspconfig.nvim' },
 
 	-- Requirements for lsp-zero
-	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', lazy = true, config = false},
-	{'neovim/nvim-lspconfig'},
-	{'hrsh7th/cmp-nvim-lsp'},
-	{'hrsh7th/nvim-cmp'},
-	{'L3MON4D3/LuaSnip'},
+	{ 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x', lazy = true, config = false },
+	{ 'neovim/nvim-lspconfig' },
+	{ 'hrsh7th/cmp-nvim-lsp' },
+	{ 'hrsh7th/nvim-cmp' },
+	{ 'L3MON4D3/LuaSnip' },
 
 	-- Surround
 	{
@@ -71,7 +73,7 @@ require("lazy").setup({
 		}
 	},
 
-	-- number 
+	-- number
 	{ "sitiom/nvim-numbertoggle" },
 
 	-- neo tree
@@ -85,23 +87,31 @@ require("lazy").setup({
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		opts = {
-				filesystem = {
-					follow_current_file = {
-						enabled = true,
-						leave_dirs_open = false,
-					}
+			filesystem = {
+				follow_current_file = {
+					enabled = true,
+					leave_dirs_open = false,
 				}
+			}
 		}
 	},
 
 	-- matching tags, pairs, and ruby structures
 	{
 		'windwp/nvim-ts-autotag',
-		config = function ()
+		config = function()
 			require('nvim-ts-autotag').setup({
-				filetypes = { "html" , "xml", "eruby", "embedded_template", "svelte" }
+				filetypes = { "html", "xml", "eruby", "embedded_template", "svelte" }
 			})
 		end
 	},
-	{'RRethy/nvim-treesitter-endwise'},
+	{ 'RRethy/nvim-treesitter-endwise' },
+	{
+		'altermo/ultimate-autopair.nvim',
+		event = { 'InsertEnter', 'CmdlineEnter' },
+		branch = 'v0.6', --recommended as each new version will have breaking changes
+		opts = {
+			--Config goes here
+		},
+	},
 })
