@@ -38,7 +38,7 @@ require("lazy").setup({
 	{'williamboman/mason-lspconfig.nvim'},
 
 	-- Requirements for lsp-zero
-	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', lazy = true, config = false},
 	{'neovim/nvim-lspconfig'},
 	{'hrsh7th/cmp-nvim-lsp'},
 	{'hrsh7th/nvim-cmp'},
@@ -92,7 +92,17 @@ require("lazy").setup({
 					}
 				}
 		}
-	}
+	},
+
+	-- match closing html tags
+	{
+		'windwp/nvim-ts-autotag',
+		config = function ()
+			require('nvim-ts-autotag').setup({
+				filetypes = { "html" , "xml", "eruby", "embedded_template", "svelte" }
+			})
+		end
+	},
 
 
 })
