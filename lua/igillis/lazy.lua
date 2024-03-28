@@ -94,7 +94,7 @@ require("lazy").setup({
 		}
 	},
 
-	-- match closing html tags
+	-- matching tags, pairs, and ruby structures
 	{
 		'windwp/nvim-ts-autotag',
 		config = function ()
@@ -103,6 +103,5 @@ require("lazy").setup({
 			})
 		end
 	},
-
-
+	{'RRethy/nvim-treesitter-endwise'},
 })
