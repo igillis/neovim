@@ -8,26 +8,26 @@ return {
 			"MunifTanjim/nui.nvim",
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
-		opts = {
-			filesystem = {
-				follow_current_file = {
-					enabled = true,
-					leave_dirs_open = false,
+		config = function()
+			require('neo-tree').setup({
+				filesystem = {
+					follow_current_file = {
+						enabled = true,
+						leave_dirs_open = false,
+					}
 				}
-			}
-		},
-		config = function() 
+
+			})
 			vim.keymap.set("n", "<leader>t", function()
-					require("neo-tree.command").execute({
-						action = "focus",
-						source = "filesystem",
-						position = "left",
-						toggle = true,
-						reveal = true,
-						reveal_force_cwd = true,
-					})
-				end
-			)
+				require("neo-tree.command").execute({
+					action = "focus",
+					source = "filesystem",
+					position = "left",
+					toggle = true,
+					reveal = true,
+					reveal_force_cwd = true,
+				})
+			end)
 		end
 	},
 }

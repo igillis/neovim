@@ -19,6 +19,7 @@ return {
 		lazy = false,
 		config = function()
 			local lspconfig = require("lspconfig")
+			require("lsp-zero").extend_lspconfig()
 			lspconfig.lua_ls.setup({})
 			lspconfig.ruby_ls.setup({})
 			lspconfig.standardrb.setup({})
