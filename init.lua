@@ -2,6 +2,7 @@
 require("remap")
 require("opts")
 require("autofmt")
+require("neotree-on-open")
 
 -- Set up lazy package manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
