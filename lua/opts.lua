@@ -8,3 +8,9 @@ vim.opt.foldlevel = 99
 
 -- Ignore case in search by default
 vim.opt.ignorecase = true
+
+-- 2 spaces for indent by default
+vim.opt.autoindent = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
