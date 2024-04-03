@@ -4,9 +4,20 @@ return {
 		build = ":TSUpdate",
 		lazy = false,
 		config = function()
-			require('nvim-treesitter.configs').setup {
+			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all" (the five listed parsers should always be installed)
-				ensure_installed = { "lua", "vim", "vimdoc", "query", "javascript", "typescript", "ruby", "bash", "embedded_template", "html" },
+				ensure_installed = {
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"javascript",
+					"typescript",
+					"ruby",
+					"bash",
+					"embedded_template",
+					"html",
+				},
 
 				-- Install parsers synchronously (only applied to `ensure_installed`)
 				sync_install = false,
@@ -25,15 +36,17 @@ return {
 					additional_vim_regex_highlighting = false,
 				},
 				autotag = {
-					enable = true
+					enable = true,
+					enable_close_on_slash = true,
+					filetypes = { "html", "xml", "eruby", "embedded_template", "svelte" },
 				},
 				endwise = {
-					enable = true
+					enable = true,
 				},
 				indent = {
-					enable = true
-				}
-			}
-		end
-	}
+					enable = true,
+				},
+			})
+		end,
+	},
 }

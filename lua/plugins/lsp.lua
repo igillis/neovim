@@ -103,12 +103,21 @@ return {
   { "hrsh7th/cmp-nvim-lsp" },
   {
     "hrsh7th/nvim-cmp",
-    config = function()
+    opts = function()
       local cmp = require("cmp")
-      local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-      local lsp_zero = require("lsp-zero")
-      cmp.setup({
+      return {
+        completion = {
+          completeopt = "menu,menuone,noinsert",
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-Space>"] = cmp.mapping.complete(),
+        }),
+        formatting = {
+          format = require("tailwindcss-colorizer-cmp").formatter,
+        },
         sources = {
           { name = "path" },
           { name = "nvim_lsp" },
@@ -116,26 +125,51 @@ return {
           { name = "luasnip", keyword_length = 2 },
           { name = "buffer",  keyword_length = 3 },
         },
-        formatting = lsp_zero.cmp_format({ details = false }),
-        mapping = cmp.mapping.preset.insert({
-          ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
-          ["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<C-Space>"] = cmp.mapping.complete(),
-        }),
-      })
-
-      -- TODO: finish making tailwind colorizer work with lsp_zero
-      -- cmp.config.formatting = {
-      -- 	format = require("tailwindcss-colorizer-cmp").formatter,
-      -- }
+      }
     end,
   },
   {
     "L3MON4D3/LuaSnip",
-    config = function()
-      require("luasnip.loaders.from_vscode").lazy_load()
-    end,
+    dependencies = {
+      {
+        "rafamadriz/friendly-snippets",
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+      },
+      {
+        "nvim-cmp",
+        dependencies = {
+          "saadparwaiz1/cmp_luasnip",
+        },
+        opts = function(_, opts)
+          opts.snippet = {
+            expand = function(args)
+              require("luasnip").lsp_expand(args.body)
+            end,
+          }
+          table.insert(opts.sources, { name = "luasnip" })
+        end,
+      },
+    },
+    opts = {
+      history = true,
+      delete_check_events = "TextChanged",
+    },
+    -- stylua: ignore
+    keys = {
+      {
+        "<tab>",
+        function()
+          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = "i",
+      },
+      { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+    },
   },
   -- {
   --   "linrongbin16/lsp-progress.nvim",
