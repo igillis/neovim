@@ -9,6 +9,7 @@ return {
         null_ls.builtins.diagnostics.erb_lint,
         null_ls.builtins.formatting.htmlbeautifier.with({
           command = "bundle",
+          filetypes = { "eruby" },
           args = vim.list_extend(
             { "exec", "htmlbeautifier" },
             null_ls.builtins.formatting.htmlbeautifier._opts.args
